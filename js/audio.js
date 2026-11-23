@@ -48,6 +48,17 @@
     filter.connect(gain);
     gain.connect(audioCtx.destination);
 
+    // Explicit node graph garbage collection upon chirp completion
+    osc.onended = () => {
+      try {
+        osc.disconnect();
+        filter.disconnect();
+        gain.disconnect();
+      } catch (err) {
+        // Silently ignore if already cleaned
+      }
+    };
+
     osc.start(now);
     osc.stop(now + 0.3);
   }
@@ -61,6 +72,8 @@
     if (soundOn) {
       initAudioContext();
       playSquishChirp();
+    } else if (audioCtx && audioCtx.state === 'running') {
+      audioCtx.suspend();
     }
   }
 
