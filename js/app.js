@@ -156,6 +156,15 @@
     }
   });
 
+  /* ---------- Service Worker Registration (PWA Offline) ---------- */
+  if ('serviceWorker' in navigator && window.location.protocol.startsWith('http')) {
+    window.addEventListener('load', () => {
+      navigator.serviceWorker.register('sw.js').catch(() => {
+        // Silently handle environments where sw cannot be registered
+      });
+    });
+  }
+
   /* Public App Interface */
   window.JellyApp = {
     onSquish: bumpSquishCount
