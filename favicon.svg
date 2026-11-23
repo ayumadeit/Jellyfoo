@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <defs>
+    <linearGradient id="jellyGrad" x1="10%" y1="0%" x2="90%" y2="100%">
+      <stop offset="0%" stop-color="#FFA4C8" />
+      <stop offset="50%" stop-color="#FF7AA7" />
+      <stop offset="100%" stop-color="#C8B6FF" />
+    </linearGradient>
+    <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="3" result="blur" />
+      <feComposite in="SourceGraphic" in2="blur" operator="over" />
+    </filter>
+  </defs>
+  <ellipse cx="32" cy="56" rx="22" ry="5" fill="#45344F" opacity="0.12" />
+  <path d="M12 36 C10 22 20 10 32 10 C44 10 54 22 52 36 C50 48 44 54 32 54 C20 54 14 48 12 36 Z" fill="url(#jellyGrad)" filter="url(#glow)" />
+  <!-- Glossy Highlights -->
+  <ellipse cx="24" cy="20" rx="6" ry="3.5" transform="rotate(-25 24 20)" fill="#FFFFFF" opacity="0.75" />
+  <circle cx="34" cy="17" r="1.8" fill="#FFFFFF" opacity="0.6" />
+</svg>
