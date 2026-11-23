@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="description" content="jellyfoo — an interactive 3D digital fidget toy with soft, squishy jelly physics to melt your stress away.">
+  <meta name="theme-color" content="#FF8FB8">
+  <title>jellyfoo — squish your stress away.</title>
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <!-- Navigation -->
+  <nav>
+    <a class="logo" href="#top"><i></i>jellyfoo</a>
+    <div class="links">
+      <button class="pill" data-open="about" aria-haspopup="dialog">About</button>
+      <button class="pill" data-open="how" aria-haspopup="dialog">How to Play</button>
+      <button class="pill solid" id="snd" aria-pressed="false">🔇 <span>sound off</span></button>
+    </div>
+  </nav>
+
+  <!-- Hero Header -->
+  <header class="hero" id="top">
+    <h1>your little corner of squish.</h1>
+    <p>A tiny jelly. A little interaction. A whole lot of satisfaction.</p>
+    <span class="hint">✦ go on, give it a squish</span>
+  </header>
+
+  <!-- Interactive Play Zone -->
+  <section class="play" id="play" aria-label="Interactive 3D Jelly Canvas">
+    <div class="glow" id="glow"></div>
+    <div class="bubbles" id="bubbles" aria-hidden="true"></div>
+    <div class="tools">
+      <div class="counter" role="status" aria-live="polite">
+        <span>squishes</span>
+        <b id="count">0</b>
+      </div>
+      <button class="pill solid" id="rand" aria-label="Trigger random squish impulse">🎲 random squish</button>
+      <button class="pill solid" id="reset" aria-label="Reset jelly shape and counter">↺ reset</button>
+    </div>
+  </section>
+
+  <!-- Color Palette Customizer -->
+  <section class="custom" aria-label="Jelly Color Customizer">
+    <h2>pick your jelly</h2>
+    <div class="sw" id="sw" role="radiogroup" aria-label="Choose jelly flavor"></div>
+    <span class="label" id="lab">Bubblegum Pink</span>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    made with a little bit of jelly ♡<br>
+    jellyfoo — squish your stress away.
+  </footer>
+
+  <!-- Modal Dialogs -->
+  <dialog id="about" aria-labelledby="about-title">
+    <h3 id="about-title">about jellyfoo</h3>
+    <p>Jellyfoo is a digital fidget toy: one soft, wobbly jelly and nothing else to worry about. Take a breath and squish.</p>
+    <button class="pill solid" onclick="this.closest('dialog').close()">got it ♡</button>
+  </dialog>
+
+  <dialog id="how" aria-labelledby="how-title">
+    <h3 id="how-title">how to play</h3>
+    <ul>
+      <li><b>hover</b> — the jelly leans toward you</li>
+      <li><b>tap / click</b> — poke it</li>
+      <li><b>press &amp; drag</b> — stretch it, then let go</li>
+      <li>try new colors below!</li>
+    </ul>
+    <button class="pill solid" onclick="this.closest('dialog').close()">got it ♡</button>
+  </dialog>
+
+  <!-- Three.js CDN -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  
+  <!-- Modular Application Scripts -->
+  <script src="js/presets.js"></script>
+  <script src="js/audio.js"></script>
+  <script src="js/physics.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
