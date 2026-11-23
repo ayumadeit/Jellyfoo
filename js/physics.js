@@ -160,7 +160,7 @@
   function releasePointer() {
     if (!drag) return;
     if (drag.moved > 12 && window.JellyApp && window.JellyApp.onSquish) {
-      window.JellyApp.onSquish();
+      window.JellyApp.onSquish('release');
     }
     drag = null;
     dragVec.set(0, 0, 0);

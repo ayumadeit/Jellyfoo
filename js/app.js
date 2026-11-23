@@ -12,9 +12,26 @@
   const resetBtn = $('reset');
   const bubblesContainer = $('bubbles');
 
+  /* ---------- Haptic Feedback (Vibration API) ---------- */
+  function triggerHaptic(intensity = 'tap') {
+    if (!('vibrate' in navigator)) return;
+    try {
+      if (intensity === 'tap') {
+        navigator.vibrate(15);
+      } else if (intensity === 'release') {
+        navigator.vibrate([12, 25, 18]);
+      } else if (intensity === 'bounce') {
+        navigator.vibrate([20, 35, 25]);
+      }
+    } catch (_) {
+      // Graceful fallback for non-vibrating devices
+    }
+  }
+
   /* ---------- Squish Counter & Audio Trigger ---------- */
-  function bumpSquishCount() {
+  function bumpSquishCount(hapticType = 'tap') {
     squishes++;
+    triggerHaptic(hapticType);
     if (countEl) {
       countEl.textContent = squishes;
       countEl.classList.remove('pop');
@@ -68,7 +85,7 @@
       ).normalize();
 
       window.JellyPhysics.applyImpulse(randVec, 5.5, 0.5);
-      bumpSquishCount();
+      bumpSquishCount('bounce');
 
       // Secondary reactionary wobble bounce
       const reboundVec = new THREE.Vector3(-randVec.x, -randVec.y, randVec.z).normalize();
@@ -167,6 +184,7 @@
 
   /* Public App Interface */
   window.JellyApp = {
-    onSquish: bumpSquishCount
+    onSquish: bumpSquishCount,
+    triggerHaptic: triggerHaptic
   };
 })();
