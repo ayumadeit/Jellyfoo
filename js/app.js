@@ -127,6 +127,35 @@
   initColorSwatches();
   spawnBubbles();
 
+  /* ---------- Keyboard Accessibility & Quick Shortcuts ---------- */
+  window.addEventListener('keydown', (e) => {
+    if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
+    if (document.querySelector('dialog[open]')) return;
+
+    if (e.code === 'Space' || e.code === 'KeyS') {
+      e.preventDefault();
+      if (window.JellyPhysics && window.JellyPhysics.applyImpulse) {
+        const centerVec = new THREE.Vector3(0, 0, 1);
+        window.JellyPhysics.applyImpulse(centerVec, 4.5, 0.45);
+        bumpSquishCount();
+      }
+    } else if (e.code === 'KeyR') {
+      e.preventDefault();
+      if (randBtn) randBtn.click();
+    } else if (e.code === 'KeyM') {
+      e.preventDefault();
+      if (window.JellyAudio && window.JellyAudio.toggle) {
+        window.JellyAudio.toggle();
+      }
+    } else if (e.key >= '1' && e.key <= '7') {
+      const idx = parseInt(e.key, 10) - 1;
+      const swButtons = document.querySelectorAll('#sw button');
+      if (swButtons[idx]) {
+        swButtons[idx].click();
+      }
+    }
+  });
+
   /* Public App Interface */
   window.JellyApp = {
     onSquish: bumpSquishCount
