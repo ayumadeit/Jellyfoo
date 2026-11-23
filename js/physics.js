@@ -64,6 +64,8 @@
   const grabLocal = new THREE.Vector3();
   const dragVec = new THREE.Vector3();
   const tempVec = new THREE.Vector3();
+  const planeNormal = new THREE.Vector3(0, 0, 1);
+  const dragPlane = new THREE.Plane(planeNormal, 0);
 
   function getMeshIntersection() {
     return raycaster.intersectObject(mesh)[0];
@@ -84,6 +86,9 @@
    */
   function applyImpulse(point, strength, sigma) {
     const sigmaSq = sigma * sigma;
+    const bulgeRadius = sigma * 1.7;
+    const bulgeVariance = sigmaSq * 0.6;
+
     for (let i = 0; i < N; i++) {
       const idx = i * 3;
       const x = base[idx], y = base[idx + 1], z = base[idx + 2];
@@ -92,7 +97,7 @@
       if (distSq > 4) continue;
 
       const dist = Math.sqrt(distSq);
-      const weight = -Math.exp(-distSq / sigmaSq) + 0.5 * Math.exp(-Math.pow(dist - sigma * 1.7, 2) / (sigmaSq * 0.6));
+      const weight = -Math.exp(-distSq / sigmaSq) + 0.5 * Math.exp(-Math.pow(dist - bulgeRadius, 2) / bulgeVariance);
       V[idx]     += x * strength * weight;
       V[idx + 1] += y * strength * weight;
       V[idx + 2] += z * strength * weight;
@@ -120,8 +125,8 @@
     updateRayFromPointer(e);
 
     if (drag) {
-      const plane = new THREE.Plane(new THREE.Vector3(0, 0, 1), -drag.wp.z);
-      if (raycaster.ray.intersectPlane(plane, tempVec)) {
+      dragPlane.constant = -drag.wp.z;
+      if (raycaster.ray.intersectPlane(dragPlane, tempVec)) {
         dragVec.copy(tempVec).sub(drag.wp);
         if (dragVec.length() > 1.3) dragVec.setLength(1.3);
       }
@@ -202,8 +207,21 @@
   const K = 70;  // Spring constant
   const C = 4.2; // Damping coefficient
   const lerp = (a, b, t) => a + (b - a) * t;
+  let isLoopActive = true;
+
+  document.addEventListener('visibilitychange', () => {
+    if (document.hidden) {
+      isLoopActive = false;
+    } else {
+      isLoopActive = true;
+      clock.getDelta(); // Clear time delta accumulator
+      requestAnimationFrame(renderFrame);
+    }
+  });
 
   function renderFrame() {
+    if (!isLoopActive) return;
+
     const dt = Math.min(clock.getDelta(), 1 / 30);
     const t = clock.elapsedTime;
     const subSteps = 2;
