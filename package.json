@@ -1,0 +1,19 @@
+{
+  "name": "jellyfoo",
+  "version": "1.0.0",
+  "description": "Tactile 3D soft-body jelly fidget toy with Web Audio",
+  "main": "index.html",
+  "scripts": {
+    "start": "npx serve .",
+    "dev": "npx serve ."
+  },
+  "keywords": [
+    "threejs",
+    "webgl",
+    "fidget-toy",
+    "soft-body-physics",
+    "web-audio"
+  ],
+  "author": "Ayush",
+  "license": "MIT"
+}
