@@ -46,6 +46,17 @@ jellyfoo/
 
 ---
 
+## ⌨️ Keyboard Shortcuts
+
+| Key | Action |
+| :--- | :--- |
+| <kbd>Space</kbd> / <kbd>S</kbd> | Direct squish impulse & pop |
+| <kbd>R</kbd> | Trigger randomized bounce impulse |
+| <kbd>M</kbd> | Toggle Web Audio mute / sound on |
+| <kbd>1</kbd> – <kbd>7</kbd> | Switch jelly color flavor instantly |
+
+---
+
 ## 🔬 How the Physics Works
 
 ### 1. Spring-Damper System
